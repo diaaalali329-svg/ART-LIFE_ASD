@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ART LIFE - استوديو التحليل وتركيب الأزياء</title>
+    <style>
+        /* ================= الهوية البصرية ================= */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f8fafc;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #38bdf8;
+            margin-top: 30px;
+            font-size: 2.2rem;
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+        }
+
+        p.subtitle {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        /* ================= قسم الطقس ================= */
+        .weather-section {
+            background-color: #1e293b;
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 500px;
+            margin: 0 auto 30px auto;
+            border: 1px solid #334155;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .weather-section h3 { margin-top: 0; color: #e2e8f0; font-size: 1.2rem; }
+        .weather-options { display: flex; justify-content: center; gap: 20px; margin-top: 15px; }
+        .weather-options input[type="radio"] { display: none; }
+        
+        .weather-label {
+            background-color: #0f172a;
+            border: 2px solid #334155;
+            padding: 10px 25px;
+            border-radius: 10px;
+            color: #94a3b8;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .weather-label:hover { border-color: #38bdf8; color: #f8fafc; }
+
+        input[value="sunny"]:checked + .weather-label {
+            background-color: #38bdf8; border-color: #38bdf8; color: #0f172a; box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+        }
+        input[value="rainy"]:checked + .weather-label {
+            background-color: #3b82f6; border-color: #3b82f6; color: #ffffff; box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+
+        /* ================= رفع الصور ================= */
+        .options-container { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 30px; }
+        
+        .btn {
+            background-color: #1e293b; color: #e2e8f0; border: 2px solid #334155;
+            padding: 12px 25px; font-size: 16px; border-radius: 12px; cursor: pointer; transition: all 0.3s ease;
+        }
+        .btn:hover { background-color: #334155; transform: translateY(-2px); }
+        .btn-camera { border-color: #f43f5e; color: #f43f5e; }
+        .btn-camera:hover { background-color: #f43f5e; color: #0f172a; }
+        .btn-gallery { border-color: #10b981; color: #10b981; }
+        .btn-gallery:hover { background-color: #10b981; color: #0f172a; }
+
+        .btn-ai { 
+            background-color: #38bdf8; color: #0f172a; font-weight: bold; font-size: 18px; padding: 15px 30px; border-color: #38bdf8;
+        }
+        .btn-ai:hover { background-color: transparent; color: #38bdf8; }
+        .btn-ai:disabled { background-color: #334155; color: #94a3b8; border-color: #334155; cursor: not-allowed; transform: none; }
+        input[type="file"] { display: none; }
+
+        /* شبكة عرض الصور */
+        .gallery { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin: 30px 0; }
+        .image-card {
+            position: relative; width: 150px; height: 200px; border-radius: 15px; overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4); border: 2px solid #334155; transition: transform 0.3s ease;
+        }
+        .image-card img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .winner { border: 4px solid #10b981; transform: scale(1.05); box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3); }
+
+        #ai-status { font-size: 1.3rem; font-weight: bold; margin-top: 20px; min-height: 35px; }
+
+        /* ================= النتيجة النهائية (الطقم الكامل) ================= */
+        .final-result-container {
+            display: none; margin: 40px auto; padding: 30px; background-color: #1e293b;
+            border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.5); max-width: 600px; border-top: 5px solid #10b981;
+        }
+        .final-result-container h2 { color: #e2e8f0; margin-top: 0; }
+        
+        /* حاوية الطقم لترتيب الصور بجانب بعضها */
+        .outfit-display {
+            display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 15px; margin-top: 25px;
+        }
+        
+        .final-image-item {
+            width: 130px; height: 180px; border-radius: 12px; object-fit: cover;
+            border: 2px solid #38bdf8; box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+        }
+
+        .weather-feedback { font-size: 1.1rem; margin-top: 10px; font-weight: bold; }
+        .back-home { display: inline-block; margin-top: 40px; color: #94a3b8; text-decoration: none; font-size: 1.1rem; transition: color 0.3s ease; }
+        .back-home:hover { color: #38bdf8; }
+    </style>
+</head>
+<body>
+
+    <h1>استوديو ART LIFE</h1>
+    <p class="subtitle">قم بإدراج قطع الملابس (قمصان، بناطيل، أحذية)، وسنركب لك الطقم الأفضل.</p>
+
+    <!-- قسم اختيار الطقس -->
+    <div class="weather-section">
+        <h3>كيف يبدو الطقس اليوم؟</h3>
+        <div class="weather-options">
+            <input type="radio" name="weather" id="sunny" value="sunny">
+            <label for="sunny" class="weather-label">☀️ مشمس</label>
+
+            <input type="radio" name="weather" id="rainy" value="rainy">
+            <label for="rainy" class="weather-label">🌧️ ممطر</label>
+        </div>
+    </div>
+
+    <!-- قسم رفع الصور -->
+    <div class="options-container">
+        <label for="camera-upload" class="btn btn-camera">📸 التقاط بالكاميرا</label>
+        <input type="file" id="camera-upload" accept="image/*" capture="environment">
+
+        <label for="gallery-upload" class="btn btn-gallery">🖼️ إدراج عدة قطع</label>
+        <input type="file" id="gallery-upload" accept="image/*" multiple>
+    </div>
+
+    <div class="gallery" id="image-gallery"></div>
+
+    <button id="analyze-btn" class="btn btn-ai" style="display: none;">🤖 تركيب الطقم الأفضل</button>
+    <p id="ai-status"></p>
+
+    <!-- حاوية النتيجة (الطقم الكامل) -->
+    <div class="final-result-container" id="final-result-container">
+        <h2>🎉 هذا هو الطقم الأفضل لك! 🎉</h2>
+        <p id="weather-feedback" class="weather-feedback"></p>
+        
+        <!-- هنا سيتم وضع صور الطقم (قميص، بنطال، حذاء) برمجياً -->
+        <div class="outfit-display" id="outfit-display"></div>
+    </div>
+
+    <a href="index.html" class="back-home">⬅️ العودة للصفحة الرئيسية</a>
+
+    <!-- ================= JavaScript ================= -->
+    <script>
+        const cameraUpload = document.getElementById('camera-upload');
+        const galleryUpload = document.getElementById('gallery-upload');
+        const imageGallery = document.getElementById('image-gallery');
+        const analyzeBtn = document.getElementById('analyze-btn');
+        const aiStatus = document.getElementById('ai-status');
+        const finalResultContainer = document.getElementById('final-result-container');
+        const outfitDisplay = document.getElementById('outfit-display');
+        const weatherFeedback = document.getElementById('weather-feedback');
+
+        let uploadedImagesCount = 0; 
+
+        function displayImages(files) {
+            aiStatus.textContent = '';
+            finalResultContainer.style.display = 'none'; 
+            
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const card = document.createElement('div');
+                        card.className = 'image-card';
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        card.appendChild(img);
+                        imageGallery.appendChild(card);
+                        
+                        uploadedImagesCount++;
+                        if (uploadedImagesCount > 0) {
+                            analyzeBtn.style.display = 'inline-block';
+                        }
+                    }
+                    reader.readAsDataURL(file);
+                }
+            }
+        }
+
+        cameraUpload.addEventListener('change', (e) => displayImages(e.target.files));
+        galleryUpload.addEventListener('change', (e) => displayImages(e.target.files));
+
+        analyzeBtn.addEventListener('click', function() {
+            // 1. التحقق من الطقس
+            const selectedWeather = document.querySelector('input[name="weather"]:checked');
+            if (!selectedWeather) {
+                aiStatus.textContent = '⚠️ يرجى تحديد حالة الطقس أولاً لنتمكن من تنسيق الطقم المناسب.';
+                aiStatus.style.color = '#f43f5e';
+                return;
+            }
+
+            const allCards = document.querySelectorAll('.image-card');
+            if (allCards.length === 0) return;
+
+            // 2. التحقق من الاشتراك
+            let usageCount = localStorage.getItem('artLifeUsageCount');
+            usageCount = usageCount ? parseInt(usageCount) : 0;
+
+            if (usageCount >= 5) {
+                aiStatus.textContent = '❌ استنفدت محاولاتك المجانية (5/5).';
+                aiStatus.style.color = '#f43f5e'; 
+                analyzeBtn.disabled = true;
+                setTimeout(() => { window.location.href = "subscribe.html"; }, 2000);
+                return;
+            }
+
+            allCards.forEach(card => card.classList.remove('winner'));
+            finalResultContainer.style.display = 'none'; 
+            outfitDisplay.innerHTML = ''; // مسح الطقم القديم
+
+            aiStatus.textContent = 'جاري تحليل الألوان وتنسيق القطع... ⏳';
+            aiStatus.style.color = '#eab308'; 
+            analyzeBtn.disabled = true; 
+
+            // 3. خوارزمية تركيب الطقم الكامل
+            setTimeout(() => {
+                // نحدد عدد القطع المطلوبة للطقم (نختار حتى 3 قطع إذا توفرت)
+                let itemsToPick = Math.min(3, allCards.length); 
+                let selectedIndices = [];
+                
+                // اختيار عشوائي لقطع مختلفة لتركيب الطقم
+                while(selectedIndices.length < itemsToPick) {
+                    let r = Math.floor(Math.random() * allCards.length);
+                    if(selectedIndices.indexOf(r) === -1) {
+                        selectedIndices.push(r);
+                    }
+                }
+
+                // عرض القطع المختارة
+                selectedIndices.forEach(idx => {
+                    allCards[idx].classList.add('winner'); // وضع إطار أخضر على القطع الفائزة في المعرض
+                    
+                    const imgSrc = allCards[idx].querySelector('img').src;
+                    const imgEl = document.createElement('img');
+                    imgEl.src = imgSrc;
+                    imgEl.className = 'final-image-item'; // تنسيق مخصص لقطع الطقم
+                    outfitDisplay.appendChild(imgEl); // إضافتها للصندوق النهائي
+                });
+                
+                // تخصيص النص حسب الطقس
+                if (selectedWeather.value === 'sunny') {
+                    weatherFeedback.textContent = '✨ طقم متناسق يمنحك الأناقة والانتعاش في الجو المشمس ☀️';
+                    weatherFeedback.style.color = '#eab308'; 
+                } else if (selectedWeather.value === 'rainy') {
+                    weatherFeedback.textContent = '✨ تنسيق رائع يوفر لك الدفء والأناقة في الجو الممطر 🌧️';
+                    weatherFeedback.style.color = '#38bdf8'; 
+                }
+
+                finalResultContainer.style.display = 'block'; 
+                usageCount++;
+                localStorage.setItem('artLifeUsageCount', usageCount);
+
+                aiStatus.textContent = '✨ اكتمل التنسيق! تبقى لديك ' + (5 - usageCount) + ' محاولات.';
+                aiStatus.style.color = '#10b981'; 
+                
+                if (usageCount < 5) analyzeBtn.disabled = false;
+                finalResultContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
