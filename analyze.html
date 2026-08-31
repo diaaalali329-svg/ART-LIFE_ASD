@@ -1,0 +1,2035 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ART LIFE - AI Fashion Studio</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+
+            font-family:
+                "Segoe UI",
+                Tahoma,
+                Arial,
+                sans-serif;
+
+            color: #f8fafc;
+
+            background:
+                radial-gradient(
+                    circle at top,
+                    #164e63 0%,
+                    #0f172a 45%,
+                    #020617 100%
+                );
+
+            text-align: center;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================== */
+
+        h1 {
+            margin-top: 25px;
+
+            color: #38bdf8;
+
+            font-size:
+                clamp(2rem, 5vw, 3rem);
+
+            text-shadow:
+                0 0 20px
+                rgba(56,189,248,.35);
+        }
+
+
+        .subtitle {
+            color: #94a3b8;
+
+            font-size: 1.05rem;
+
+            max-width: 700px;
+
+            margin:
+                0 auto 30px;
+        }
+
+
+        /* =========================
+           WEATHER
+        ========================== */
+
+        .weather-section {
+
+            max-width: 550px;
+
+            margin:
+                0 auto 25px;
+
+            padding: 25px;
+
+            background:
+                rgba(30,41,59,.92);
+
+            border:
+                1px solid #334155;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 15px 40px
+                rgba(0,0,0,.35);
+        }
+
+
+        .weather-section h3 {
+
+            margin-top: 0;
+
+            color: #e2e8f0;
+
+            font-size: 1.2rem;
+        }
+
+
+        .weather-options {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .weather-options input {
+
+            display: none;
+        }
+
+
+        .weather-label {
+
+            display: block;
+
+            min-width: 150px;
+
+            padding: 14px 25px;
+
+            border-radius: 12px;
+
+            border:
+                2px solid #334155;
+
+            background:
+                #0f172a;
+
+            color: #cbd5e1;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: .25s;
+        }
+
+
+        .weather-label:hover {
+
+            border-color:
+                #38bdf8;
+
+            transform:
+                translateY(-2px);
+        }
+
+
+        input[value="sunny"]:checked
+        + .weather-label {
+
+            background:
+                #38bdf8;
+
+            color:
+                #082f49;
+
+            border-color:
+                #38bdf8;
+
+            box-shadow:
+                0 0 20px
+                rgba(56,189,248,.35);
+        }
+
+
+        input[value="rainy"]:checked
+        + .weather-label {
+
+            background:
+                #2563eb;
+
+            color: white;
+
+            border-color:
+                #60a5fa;
+
+            box-shadow:
+                0 0 20px
+                rgba(37,99,235,.35);
+        }
+
+
+        /* =========================
+           BUTTONS
+        ========================== */
+
+        .options-container {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+
+            margin-bottom: 25px;
+        }
+
+
+        .btn {
+
+            display: inline-block;
+
+            padding:
+                13px 25px;
+
+            border-radius:
+                12px;
+
+            border:
+                2px solid #334155;
+
+            background:
+                #1e293b;
+
+            color:
+                #e2e8f0;
+
+            font-size:
+                16px;
+
+            font-weight:
+                600;
+
+            cursor:
+                pointer;
+
+            transition:
+                .25s;
+        }
+
+
+        .btn:hover {
+
+            transform:
+                translateY(-2px);
+
+            background:
+                #334155;
+        }
+
+
+        .btn-camera {
+
+            border-color:
+                #f43f5e;
+
+            color:
+                #fb7185;
+        }
+
+
+        .btn-camera:hover {
+
+            background:
+                #f43f5e;
+
+            color:
+                white;
+        }
+
+
+        .btn-gallery {
+
+            border-color:
+                #10b981;
+
+            color:
+                #34d399;
+        }
+
+
+        .btn-gallery:hover {
+
+            background:
+                #10b981;
+
+            color:
+                #022c22;
+        }
+
+
+        .btn-ai {
+
+            margin:
+                15px auto;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #38bdf8,
+                    #06b6d4
+                );
+
+            border-color:
+                #38bdf8;
+
+            color:
+                #082f49;
+
+            font-size:
+                18px;
+
+            font-weight:
+                800;
+
+            padding:
+                16px 30px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(56,189,248,.25);
+        }
+
+
+        .btn-ai:hover {
+
+            background:
+                transparent;
+
+            color:
+                #38bdf8;
+        }
+
+
+        .btn-ai:disabled {
+
+            cursor:
+                not-allowed;
+
+            opacity:
+                .6;
+
+            transform:
+                none;
+        }
+
+
+        input[type="file"] {
+
+            display: none;
+        }
+
+
+        /* =========================
+           GALLERY
+        ========================== */
+
+        .gallery {
+
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            align-items:
+                flex-start;
+
+            flex-wrap:
+                wrap;
+
+            gap:
+                20px;
+
+            max-width:
+                1000px;
+
+            margin:
+                25px auto;
+        }
+
+
+        .image-card {
+
+            position:
+                relative;
+
+            width:
+                170px;
+
+            height:
+                220px;
+
+            overflow:
+                hidden;
+
+            border-radius:
+                16px;
+
+            border:
+                2px solid #334155;
+
+            background:
+                #1e293b;
+
+            box-shadow:
+                0 10px 25px
+                rgba(0,0,0,.35);
+
+            transition:
+                .25s;
+        }
+
+
+        .image-card:hover {
+
+            transform:
+                translateY(-3px);
+        }
+
+
+        .image-card img {
+
+            width:
+                100%;
+
+            height:
+                100%;
+
+            object-fit:
+                cover;
+
+            display:
+                block;
+        }
+
+
+        .image-number {
+
+            position:
+                absolute;
+
+            bottom:
+                8px;
+
+            right:
+                8px;
+
+            padding:
+                5px 9px;
+
+            border-radius:
+                8px;
+
+            background:
+                rgba(15,23,42,.85);
+
+            color:
+                #fff;
+
+            font-size:
+                12px;
+
+            font-weight:
+                bold;
+        }
+
+
+        .remove-image {
+
+            position:
+                absolute;
+
+            top:
+                7px;
+
+            left:
+                7px;
+
+            width:
+                32px;
+
+            height:
+                32px;
+
+            border:
+                none;
+
+            border-radius:
+                50%;
+
+            background:
+                #f43f5e;
+
+            color:
+                white;
+
+            font-size:
+                18px;
+
+            font-weight:
+                bold;
+
+            cursor:
+                pointer;
+
+            z-index:
+                5;
+
+            box-shadow:
+                0 3px 10px
+                rgba(0,0,0,.3);
+        }
+
+
+        .winner {
+
+            border:
+                4px solid #10b981;
+
+            transform:
+                scale(1.04);
+
+            box-shadow:
+                0 0 30px
+                rgba(16,185,129,.4);
+        }
+
+
+        /* =========================
+           STATUS
+        ========================== */
+
+        #ai-status {
+
+            min-height:
+                35px;
+
+            margin:
+                15px auto;
+
+            font-size:
+                1.05rem;
+
+            font-weight:
+                bold;
+        }
+
+
+        /* =========================
+           RESULT
+        ========================== */
+
+        .final-result-container {
+
+            display:
+                none;
+
+            max-width:
+                700px;
+
+            margin:
+                40px auto;
+
+            padding:
+                30px;
+
+            border-radius:
+                22px;
+
+            background:
+                rgba(30,41,59,.95);
+
+            border:
+                1px solid #334155;
+
+            border-top:
+                5px solid #10b981;
+
+            box-shadow:
+                0 20px 50px
+                rgba(0,0,0,.45);
+
+            animation:
+                resultIn .4s ease;
+        }
+
+
+        @keyframes resultIn {
+
+            from {
+
+                opacity:
+                    0;
+
+                transform:
+                    translateY(20px);
+            }
+
+            to {
+
+                opacity:
+                    1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+
+        .final-result-container h2 {
+
+            margin-top:
+                0;
+
+            color:
+                #e2e8f0;
+        }
+
+
+        .weather-feedback {
+
+            font-size:
+                1.1rem;
+
+            font-weight:
+                bold;
+        }
+
+
+        .outfit-display {
+
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            flex-wrap:
+                wrap;
+
+            gap:
+                15px;
+
+            margin-top:
+                25px;
+        }
+
+
+        .final-image-wrapper {
+
+            position:
+                relative;
+        }
+
+
+        .final-image-item {
+
+            width:
+                150px;
+
+            height:
+                200px;
+
+            object-fit:
+                cover;
+
+            border-radius:
+                14px;
+
+            border:
+                2px solid #38bdf8;
+
+            box-shadow:
+                0 8px 20px
+                rgba(0,0,0,.35);
+        }
+
+
+        .ai-reasoning {
+
+            margin-top:
+                25px;
+
+            padding:
+                18px;
+
+            background:
+                #0f172a;
+
+            border-radius:
+                14px;
+
+            color:
+                #cbd5e1;
+
+            line-height:
+                1.8;
+
+            text-align:
+                right;
+
+            white-space:
+                pre-line;
+        }
+
+
+        .back-home {
+
+            display:
+                inline-block;
+
+            margin-top:
+                30px;
+
+            color:
+                #94a3b8;
+
+            text-decoration:
+                none;
+
+            transition:
+                .25s;
+        }
+
+
+        .back-home:hover {
+
+            color:
+                #38bdf8;
+        }
+
+
+        /* =========================
+           LOADING
+        ========================== */
+
+        .loading {
+
+            display:
+                inline-block;
+
+            width:
+                18px;
+
+            height:
+                18px;
+
+            border:
+                3px solid
+                rgba(255,255,255,.3);
+
+            border-top-color:
+                #fff;
+
+            border-radius:
+                50%;
+
+            animation:
+                spin .7s linear infinite;
+
+            vertical-align:
+                middle;
+
+            margin-left:
+                8px;
+        }
+
+
+        @keyframes spin {
+
+            to {
+                transform:
+                    rotate(360deg);
+            }
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================== */
+
+        @media(max-width:600px) {
+
+            body {
+                padding:
+                    12px;
+            }
+
+            .image-card {
+
+                width:
+                    140px;
+
+                height:
+                    185px;
+            }
+
+            .final-image-item {
+
+                width:
+                    130px;
+
+                height:
+                    175px;
+            }
+
+            .weather-label {
+
+                width:
+                    100%;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <h1>✨ استوديو ART LIFE</h1>
+
+    <p class="subtitle">
+        ارفع قطع ملابسك ودع ART LIFE AI يختار لك أفضل طقم حسب الطقس والتناسق.
+    </p>
+
+
+    <!-- =========================
+         WEATHER
+    ========================== -->
+
+    <div class="weather-section">
+
+        <h3>
+            كيف يبدو الطقس اليوم؟
+        </h3>
+
+        <div class="weather-options">
+
+            <input
+                type="radio"
+                name="weather"
+                id="sunny"
+                value="sunny"
+            >
+
+            <label
+                for="sunny"
+                class="weather-label"
+            >
+                ☀️ مشمس
+            </label>
+
+
+            <input
+                type="radio"
+                name="weather"
+                id="rainy"
+                value="rainy"
+            >
+
+            <label
+                for="rainy"
+                class="weather-label"
+            >
+                🌧️ ممطر
+            </label>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         UPLOAD
+    ========================== -->
+
+    <div class="options-container">
+
+        <label
+            for="camera-upload"
+            class="btn btn-camera"
+        >
+            📸 التقاط بالكاميرا
+        </label>
+
+
+        <input
+            type="file"
+            id="camera-upload"
+            accept="image/*"
+            capture="environment"
+        >
+
+
+        <label
+            for="gallery-upload"
+            class="btn btn-gallery"
+        >
+            🖼️ إدراج عدة قطع
+        </label>
+
+
+        <input
+            type="file"
+            id="gallery-upload"
+            accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
+            multiple
+        >
+
+    </div>
+
+
+    <!-- =========================
+         IMAGE GALLERY
+    ========================== -->
+
+    <div
+        class="gallery"
+        id="image-gallery"
+    ></div>
+
+
+    <!-- =========================
+         ANALYZE
+    ========================== -->
+
+    <button
+        id="analyze-btn"
+        class="btn btn-ai"
+        style="display:none;"
+    >
+        🤖 تحليل الطقم عبر ART LIFE AI
+    </button>
+
+
+    <p id="ai-status"></p>
+
+
+    <!-- =========================
+         FINAL RESULT
+    ========================== -->
+
+    <div
+        class="final-result-container"
+        id="final-result-container"
+    >
+
+        <h2>
+            🎉 هذا هو الطقم الأفضل لك!
+        </h2>
+
+
+        <p
+            id="weather-feedback"
+            class="weather-feedback"
+        ></p>
+
+
+        <div
+            class="outfit-display"
+            id="outfit-display"
+        ></div>
+
+
+        <div
+            class="ai-reasoning"
+            id="ai-reasoning"
+        ></div>
+
+    </div>
+
+
+    <a
+        href="index.html"
+        class="back-home"
+    >
+        ⬅️ العودة للصفحة الرئيسية
+    </a>
+
+
+<script>
+
+/* =========================================================
+   ART LIFE AI
+   GOOGLE GEMINI
+   ========================================================= */
+
+
+/*
+=============================================================
+ضع مفتاح Gemini الجديد هنا
+=============================================================
+
+مثال:
+
+const GEMINI_API_KEY = "AIza....";
+
+لا تضع المفتاح القديم الذي ظهر في الصور.
+=============================================================
+*/
+
+const GEMINI_API_KEY = "AQ.Ab8RN6IJ7m2BVpHZ8oJ1V0O0UtREozkv05r95ddUpz5O3hicPA";
+
+
+/*
+=============================================================
+النموذج الحالي
+=============================================================
+*/
+
+const GEMINI_MODEL = "gemini-3.6-flash";
+
+
+/*
+=============================================================
+عناصر الصفحة
+=============================================================
+*/
+
+const cameraUpload =
+    document.getElementById("camera-upload");
+
+const galleryUpload =
+    document.getElementById("gallery-upload");
+
+const imageGallery =
+    document.getElementById("image-gallery");
+
+const analyzeBtn =
+    document.getElementById("analyze-btn");
+
+const aiStatus =
+    document.getElementById("ai-status");
+
+const finalResultContainer =
+    document.getElementById("final-result-container");
+
+const outfitDisplay =
+    document.getElementById("outfit-display");
+
+const weatherFeedback =
+    document.getElementById("weather-feedback");
+
+const aiReasoning =
+    document.getElementById("ai-reasoning");
+
+
+/*
+=============================================================
+الملابس
+=============================================================
+*/
+
+let uploadedFiles = [];
+
+
+/*
+=============================================================
+عرض الصور
+=============================================================
+*/
+
+function displayImages(files) {
+
+    if (!files || files.length === 0) {
+        return;
+    }
+
+
+    for (const file of files) {
+
+        if (!file.type.startsWith("image/")) {
+
+            continue;
+        }
+
+
+        uploadedFiles.push(file);
+    }
+
+
+    renderGallery();
+
+    finalResultContainer.style.display = "none";
+}
+
+
+/*
+=============================================================
+إعادة رسم معرض الصور
+=============================================================
+*/
+
+function renderGallery() {
+
+    imageGallery.innerHTML = "";
+
+
+    uploadedFiles.forEach((file, index) => {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "image-card";
+
+
+        const img =
+            document.createElement("img");
+
+
+        const imageURL =
+            URL.createObjectURL(file);
+
+
+        img.src =
+            imageURL;
+
+        img.alt =
+            `قطعة ملابس ${index + 1}`;
+
+
+        const number =
+            document.createElement("div");
+
+        number.className =
+            "image-number";
+
+        number.textContent =
+            `قطعة ${index + 1}`;
+
+
+        const removeButton =
+            document.createElement("button");
+
+        removeButton.className =
+            "remove-image";
+
+        removeButton.type =
+            "button";
+
+        removeButton.textContent =
+            "×";
+
+
+        removeButton.addEventListener(
+            "click",
+            () => {
+
+                uploadedFiles.splice(
+                    index,
+                    1
+                );
+
+                renderGallery();
+
+                finalResultContainer.style.display =
+                    "none";
+
+                aiStatus.textContent = "";
+
+            }
+        );
+
+
+        card.appendChild(img);
+
+        card.appendChild(number);
+
+        card.appendChild(removeButton);
+
+
+        imageGallery.appendChild(card);
+
+    });
+
+
+    if (uploadedFiles.length > 0) {
+
+        analyzeBtn.style.display =
+            "inline-block";
+
+    } else {
+
+        analyzeBtn.style.display =
+            "none";
+    }
+}
+
+
+/*
+=============================================================
+رفع الكاميرا
+=============================================================
+*/
+
+cameraUpload.addEventListener(
+    "change",
+    function(event) {
+
+        displayImages(
+            event.target.files
+        );
+
+        event.target.value = "";
+
+    }
+);
+
+
+/*
+=============================================================
+رفع عدة صور
+=============================================================
+*/
+
+galleryUpload.addEventListener(
+    "change",
+    function(event) {
+
+        displayImages(
+            event.target.files
+        );
+
+        event.target.value = "";
+
+    }
+);
+
+
+/*
+=============================================================
+تحويل الصورة إلى Base64
+=============================================================
+*/
+
+function fileToBase64(file) {
+
+    return new Promise(
+        (resolve, reject) => {
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                () => {
+
+                    const result =
+                        reader.result;
+
+
+                    const base64 =
+                        result.split(",")[1];
+
+
+                    resolve({
+                        mimeType:
+                            file.type,
+
+                        data:
+                            base64
+                    });
+
+                };
+
+
+            reader.onerror =
+                reject;
+
+
+            reader.readAsDataURL(file);
+
+        }
+    );
+}
+
+
+/*
+=============================================================
+رسالة خطأ
+=============================================================
+*/
+
+function showError(message) {
+
+    aiStatus.textContent =
+        "❌ " + message;
+
+    aiStatus.style.color =
+        "#fb7185";
+
+}
+
+
+/*
+=============================================================
+تحليل الطقم
+=============================================================
+*/
+
+analyzeBtn.addEventListener(
+    "click",
+    async function() {
+
+
+        /*
+        ============================
+        التحقق من API KEY
+        ============================
+        */
+
+        if (
+            !GEMINI_API_KEY ||
+            GEMINI_API_KEY.includes(
+                "ضع_مفتاح"
+            )
+        ) {
+
+            showError(
+                "ضع مفتاح Gemini API الجديد داخل GEMINI_API_KEY أولاً."
+            );
+
+            return;
+        }
+
+
+        /*
+        ============================
+        التحقق من الملابس
+        ============================
+        */
+
+        if (
+            uploadedFiles.length === 0
+        ) {
+
+            showError(
+                "ارفع قطعة ملابس واحدة على الأقل."
+            );
+
+            return;
+        }
+
+
+        /*
+        ============================
+        التحقق من الطقس
+        ============================
+        */
+
+        const selectedWeather =
+            document.querySelector(
+                'input[name="weather"]:checked'
+            );
+
+
+        if (!selectedWeather) {
+
+            showError(
+                "اختر حالة الطقس أولاً."
+            );
+
+            return;
+        }
+
+
+        /*
+        ============================
+        إخفاء النتيجة القديمة
+        ============================
+        */
+
+        finalResultContainer.style.display =
+            "none";
+
+        outfitDisplay.innerHTML = "";
+
+        aiReasoning.textContent = "";
+
+
+        /*
+        ============================
+        Loading
+        ============================
+        */
+
+        analyzeBtn.disabled =
+            true;
+
+
+        aiStatus.innerHTML =
+            '🤖 جاري تحليل الملابس... <span class="loading"></span>';
+
+        aiStatus.style.color =
+            "#38bdf8";
+
+
+        try {
+
+
+            /*
+            ============================
+            الطقس
+            ============================
+            */
+
+            const weather =
+                selectedWeather.value === "sunny"
+                    ? "مشمس ودافئ"
+                    : "ممطر وبارد";
+
+
+            /*
+            ============================
+            تجهيز الصور
+            ============================
+            */
+
+            const imageParts = [];
+
+
+            for (
+                const file
+                of uploadedFiles
+            ) {
+
+                const image =
+                    await fileToBase64(file);
+
+
+                imageParts.push({
+
+                    inlineData: {
+
+                        mimeType:
+                            image.mimeType,
+
+                        data:
+                            image.data
+
+                    }
+
+                });
+
+            }
+
+
+            /*
+            ============================
+            Prompt
+            ============================
+            */
+
+            const prompt = `
+
+أنت خبير أزياء محترف تعمل داخل تطبيق ART LIFE AI.
+
+لديك مجموعة من صور قطع الملابس.
+
+ترقيم الصور يبدأ من 0.
+
+حالة الطقس:
+${weather}
+
+مهمتك:
+
+1. شاهد جميع الصور.
+2. تعرّف على نوع كل قطعة.
+3. اختر أفضل 2 أو 3 قطع لتكوين طقم متناسق.
+4. راعِ ألوان الملابس.
+5. راعِ نوع الملابس.
+6. راعِ حالة الطقس.
+7. اختر طقماً عصرياً وقابلاً للارتداء.
+8. لا تختر قطعاً متعارضة بشكل واضح.
+9. لا تختر أكثر من 3 قطع.
+10. استخدم أرقام الصور الحقيقية فقط.
+
+أعد النتيجة كـ JSON فقط.
+
+الشكل المطلوب:
+
+{
+    "selected_indices": [0, 2],
+    "reason": "شرح باللغة العربية لسبب اختيار القطع"
+}
+
+قواعد صارمة:
+
+- selected_indices عبارة عن Array من أرقام صحيحة.
+- الأرقام تبدأ من 0.
+- لا تستخدم رقم صورة غير موجود.
+- اختر 2 أو 3 قطع إن أمكن.
+- reason باللغة العربية.
+- لا تضف Markdown.
+- لا تضف أي نص خارج JSON.
+
+`;
+
+
+            /*
+            ============================
+            محتوى الطلب
+            ============================
+            */
+
+            const parts = [
+
+                {
+                    text:
+                        prompt
+                },
+
+                ...imageParts
+
+            ];
+
+
+            /*
+            ============================
+            Gemini API
+            ============================
+            */
+
+            const endpoint =
+                `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${encodeURIComponent(GEMINI_API_KEY)}`;
+
+
+            const response =
+                await fetch(
+                    endpoint,
+                    {
+
+                        method:
+                            "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                contents: [
+
+                                    {
+                                        role:
+                                            "user",
+
+                                        parts:
+                                            parts
+                                    }
+
+                                ],
+
+
+                                generationConfig: {
+
+                                    responseMimeType:
+                                        "application/json",
+
+                                    responseSchema: {
+
+                                        type:
+                                            "OBJECT",
+
+                                        properties: {
+
+                                            selected_indices: {
+
+                                                type:
+                                                    "ARRAY",
+
+                                                items: {
+
+                                                    type:
+                                                        "INTEGER"
+
+                                                }
+
+                                            },
+
+
+                                            reason: {
+
+                                                type:
+                                                    "STRING"
+
+                                            }
+
+                                        },
+
+
+                                        required: [
+
+                                            "selected_indices",
+
+                                            "reason"
+
+                                        ]
+
+                                    }
+
+                                }
+
+                            })
+
+                    }
+                );
+
+
+            /*
+            ============================
+            قراءة الاستجابة
+            ============================
+            */
+
+            const responseText =
+                await response.text();
+
+
+            let data;
+
+
+            try {
+
+                data =
+                    JSON.parse(
+                        responseText
+                    );
+
+            } catch {
+
+                console.error(
+                    "Gemini raw response:",
+                    responseText
+                );
+
+                throw new Error(
+                    "استجابة Gemini غير صالحة."
+                );
+
+            }
+
+
+            /*
+            ============================
+            معالجة أخطاء Gemini
+            ============================
+            */
+
+            if (!response.ok) {
+
+                console.error(
+                    "Gemini API ERROR:",
+                    data
+                );
+
+
+                const apiMessage =
+                    data?.error?.message ||
+                    "حدث خطأ من Gemini API.";
+
+
+                if (
+                    response.status === 400
+                ) {
+
+                    throw new Error(
+                        "طلب Gemini غير صحيح: " +
+                        apiMessage
+                    );
+
+                }
+
+
+                if (
+                    response.status === 401 ||
+                    response.status === 403
+                ) {
+
+                    throw new Error(
+                        "مفتاح Gemini غير صالح أو غير مسموح به."
+                    );
+
+                }
+
+
+                if (
+                    response.status === 429
+                ) {
+
+                    throw new Error(
+                        "تم تجاوز الحد المجاني للطلبات. انتظر قليلاً ثم حاول مرة أخرى."
+                    );
+
+                }
+
+
+                throw new Error(
+                    apiMessage
+                );
+
+            }
+
+
+            /*
+            ============================
+            استخراج النص
+            ============================
+            */
+
+            const aiText =
+                data
+                ?.candidates?.[0]
+                ?.content?.parts?.find(
+                    part =>
+                        typeof part.text ===
+                        "string"
+                )
+                ?.text;
+
+
+            if (!aiText) {
+
+                console.error(
+                    "Gemini response:",
+                    data
+                );
+
+                throw new Error(
+                    "Gemini لم يرجع نتيجة تحليل."
+                );
+
+            }
+
+
+            /*
+            ============================
+            تحويل JSON
+            ============================
+            */
+
+            let decision;
+
+
+            try {
+
+                decision =
+                    JSON.parse(
+                        aiText
+                    );
+
+            } catch {
+
+                console.error(
+                    "AI TEXT:",
+                    aiText
+                );
+
+                throw new Error(
+                    "تعذر قراءة نتيجة الذكاء الاصطناعي."
+                );
+
+            }
+
+
+            /*
+            ============================
+            الفهارس المختارة
+            ============================
+            */
+
+            let selectedIndices =
+                Array.isArray(
+                    decision.selected_indices
+                )
+                    ? decision.selected_indices
+                    : [];
+
+
+            /*
+            ============================
+            تنظيف الفهارس
+            ============================
+            */
+
+            selectedIndices =
+                selectedIndices
+                    .map(
+                        Number
+                    )
+                    .filter(
+                        index =>
+                            Number.isInteger(index) &&
+                            index >= 0 &&
+                            index < uploadedFiles.length
+                    );
+
+
+            /*
+            إزالة التكرار
+            */
+
+            selectedIndices =
+                [...new Set(
+                    selectedIndices
+                )];
+
+
+            /*
+            ============================
+            إذا لم يجد AI نتيجة
+            ============================
+            */
+
+            if (
+                selectedIndices.length === 0
+            ) {
+
+                throw new Error(
+                    "لم يتم اختيار أي قطعة مناسبة."
+                );
+
+            }
+
+
+            /*
+            ============================
+            تحديد الصور الفائزة
+            ============================
+            */
+
+            const cards =
+                document.querySelectorAll(
+                    ".image-card"
+                );
+
+
+            selectedIndices.forEach(
+                index => {
+
+                    if (
+                        cards[index]
+                    ) {
+
+                        cards[index]
+                            .classList
+                            .add(
+                                "winner"
+                            );
+
+                    }
+
+                }
+            );
+
+
+            /*
+            ============================
+            عرض النتيجة
+            ============================
+            */
+
+            selectedIndices.forEach(
+                index => {
+
+                    const file =
+                        uploadedFiles[index];
+
+
+                    const wrapper =
+                        document.createElement(
+                            "div"
+                        );
+
+                    wrapper.className =
+                        "final-image-wrapper";
+
+
+                    const img =
+                        document.createElement(
+                            "img"
+                        );
+
+
+                    img.className =
+                        "final-image-item";
+
+
+                    img.src =
+                        URL.createObjectURL(
+                            file
+                        );
+
+
+                    img.alt =
+                        `القطعة المختارة ${index + 1}`;
+
+
+                    wrapper.appendChild(
+                        img
+                    );
+
+
+                    outfitDisplay.appendChild(
+                        wrapper
+                    );
+
+                }
+            );
+
+
+            /*
+            ============================
+            سبب الاختيار
+            ============================
+            */
+
+            aiReasoning.textContent =
+                "🤖 تحليل ART LIFE AI:\n\n" +
+                (
+                    decision.reason ||
+                    "تم اختيار هذه القطع لأنها الأكثر تناسقاً."
+                );
+
+
+            /*
+            ============================
+            رسالة الطقس
+            ============================
+            */
+
+            if (
+                selectedWeather.value ===
+                "sunny"
+            ) {
+
+                weatherFeedback.textContent =
+                    "☀️ هذا الطقم مناسب للطقس المشمس والدافئ.";
+
+                weatherFeedback.style.color =
+                    "#facc15";
+
+            } else {
+
+                weatherFeedback.textContent =
+                    "🌧️ هذا الطقم مناسب للطقس الممطر والبارد.";
+
+                weatherFeedback.style.color =
+                    "#38bdf8";
+
+            }
+
+
+            /*
+            ============================
+            إظهار النتيجة
+            ============================
+            */
+
+            finalResultContainer.style.display =
+                "block";
+
+
+            aiStatus.textContent =
+                "✨ تم تحليل الطقم بنجاح بواسطة ART LIFE AI!";
+
+            aiStatus.style.color =
+                "#10b981";
+
+
+            /*
+            ============================
+            الانتقال للنتيجة
+            ============================
+            */
+
+            setTimeout(
+                () => {
+
+                    finalResultContainer
+                        .scrollIntoView({
+
+                            behavior:
+                                "smooth",
+
+                            block:
+                                "center"
+
+                        });
+
+                },
+                200
+            );
+
+
+        } catch (error) {
+
+
+            console.error(
+                "ART LIFE ERROR:",
+                error
+            );
+
+
+            showError(
+                error.message ||
+                "حدث خطأ أثناء تحليل الملابس."
+            );
+
+
+        } finally {
+
+            analyzeBtn.disabled =
+                false;
+
+        }
+
+    });
+
+</script>
+
+</body>
+</html>
